@@ -5,10 +5,10 @@
     <title>CounterButtonApp</title>
   </head>
   <body>
-    <div id="app">
-      <button type="button">0</button>
-    </div>
-
+    <div id="app"></div>
+    <template id="counterTemplate">
+      <button @click="add" type="button">{{ count }}</button>
+    </template>
     <script type="module" src="./script.js"></script>
   </body>
 </html>
