@@ -11,19 +11,17 @@
     </style>
   </head>
   <body>
-    <div id="app" style="margin-top: 2rem">
+    <div id="app" style="margin-top: 2rem"></div>
+    <template id="marked-list">
       <div class="container">
         <div class="form-group">
-          <input type="search" />
+          <input v-model="filterValue" type="search" />
         </div>
         <ul>
-          <li>Email</li>
-          <li class="marked">Email</li>
-          <li>...</li>
-          <li>Email</li>
+          <li v-for="email in emails" :key="email" :class="{ marked: email.isMarked }">{{ email.value }}</li>
         </ul>
       </div>
-    </div>
+    </template>
 
     <script type="module" src="./script.js"></script>
   </body>
