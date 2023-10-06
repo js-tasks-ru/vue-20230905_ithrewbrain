@@ -21,7 +21,7 @@
       }"
       v-bind="$attrs"
       :value="modelValue"
-      @input="$emit('update:modelValue', $event.target.value)"
+      @[eventName]="$emit('update:modelValue', $event.target.value)"
     />
 
     <div v-if="$slots['right-icon']" class="input-group__icon">
@@ -41,6 +41,9 @@ export default {
     small: Boolean,
     rounded: Boolean,
     multiline: Boolean,
+    modelModifiers: {
+      default: () => ({}),
+    },
   },
 
   emits: ['update:modelValue'],
@@ -54,6 +57,9 @@ export default {
   computed: {
     tag() {
       return this.multiline ? 'textarea' : 'input';
+    },
+    eventName() {
+      return this.modelModifiers.lazy ? 'change' : 'input';
     },
   },
 };
