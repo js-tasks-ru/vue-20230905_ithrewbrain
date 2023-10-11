@@ -2,16 +2,11 @@
   <UiInput
     :type="type"
     :step="step"
-    :model-value="formattedData"
+    :model-value="formattedDate"
     @input="handleDateInput"
-    v-bind="$attrs"
   >
-    <template v-if="$slots['left-icon']" #left-icon>
-      <slot name="left-icon" />
-    </template>
-
-    <template v-if="$slots['right-icon']" #right-icon>
-      <slot name="right-icon" />
+    <template v-for="slotName in Object.keys($slots)" #[slotName]>
+      <slot :name="slotName" />
     </template>
   </UiInput>
 </template>
@@ -27,8 +22,6 @@ const INPUT_TYPES = {
 
 export default {
   name: 'UiInputDate',
-
-  inheritAttrs: false,
 
   components: { UiInput },
 
@@ -61,7 +54,7 @@ export default {
   },
 
   computed: {
-    formattedData() {
+    formattedDate() {
       if (!this.modelValue) return '';
 
       const date = new Date(this.modelValue);
