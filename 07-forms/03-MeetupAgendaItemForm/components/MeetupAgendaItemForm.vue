@@ -170,6 +170,7 @@ export default {
   data() {
     return {
       localAgendaItem: { ...this.agendaItem },
+      formGroups: null,
     };
   },
 
@@ -192,10 +193,8 @@ export default {
 
       this.localAgendaItem.endsAt = endsAtDate.toTimeString().slice(0, 5);
     },
-  },
 
-  computed: {
-    formGroups() {
+    getFormGroups() {
       const currentTypeFormGroups = agendaItemFormSchemas[this.localAgendaItem.type];
 
       return Object.keys(currentTypeFormGroups).map((formGroupKey) => currentTypeFormGroups[formGroupKey]);
@@ -209,8 +208,16 @@ export default {
         this.$emit('update:agendaItem', { ...this.localAgendaItem });
       },
     },
+
     'localAgendaItem.startsAt'(newValue, oldValue) {
       this.calculateNewEndsAt(newValue, oldValue);
+    },
+
+    'localAgendaItem.type': {
+      immediate: true,
+      handler() {
+        this.formGroups = this.getFormGroups();
+      },
     },
   },
 };
