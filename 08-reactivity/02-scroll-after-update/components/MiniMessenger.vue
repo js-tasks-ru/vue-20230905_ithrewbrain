@@ -1,6 +1,6 @@
 <template>
   <main class="mini-messenger">
-    <ul class="messages">
+    <ul ref="list" class="messages">
       <li v-for="message in messages" :key="message.id" class="message">
         {{ message.text }}
       </li>
@@ -42,6 +42,13 @@ export default {
         text: this.newMessage,
       });
       this.newMessage = '';
+
+      this.scrollToLastMessage()
+    },
+
+    async scrollToLastMessage() {
+      await this.$nextTick()
+      this.$refs.list.scrollBy(0, this.$refs.list.scrollHeight)
     },
   },
 };
