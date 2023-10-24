@@ -9,6 +9,7 @@
 import { SensorsDataController } from '../services/SensorsDataController';
 import { SensorsDataStreamingService } from '../services/SensorsDataStreamingService';
 import SensorsDataRow from './SensorsDataRow';
+import { klona } from 'klona';
 
 export default {
   name: 'SensorsDataView',
@@ -42,7 +43,13 @@ export default {
     },
 
     setData(sensors) {
-      this.sensors = sensors;
+      if (!this.sensors) {
+        this.sensors = klona(sensors);
+      } else {
+        Object.keys(sensors).forEach((key) => {
+          this.sensors[key].value = sensors[key].value;
+        });
+      }
     },
   },
 };
