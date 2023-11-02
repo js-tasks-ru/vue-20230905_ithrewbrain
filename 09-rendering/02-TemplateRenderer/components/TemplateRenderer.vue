@@ -1,5 +1,5 @@
 <script>
-import { compile, h, defineComponent } from 'vue/dist/vue.cjs';
+import { compile, h, defineComponent } from 'vue';
 
 export default {
   name: 'TemplateRenderer',
