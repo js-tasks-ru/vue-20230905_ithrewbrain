@@ -1,14 +1,42 @@
 <template>
-  <button class="button-group__button button-group__button_active" type="button" aria-selected="false">Button</button>
+  <button
+    class="button-group__button"
+    :class="{ 'button-group__button_active': isActive }"
+    @click="handleClick"
+    type="button"
+    aria-selected="false"
+  >
+    <slot />
+  </button>
 </template>
 
 <script>
+import { warn } from 'vue';
+
 export default {
   name: 'UiButtonGroupItem',
 
   props: {
     value: {
       required: true,
+    },
+  },
+
+  mounted() {
+    if (this.$parent.name !== 'UiButtonGroup') {
+      warn('The UiButtonGroupItem component must be placed in a UiButtonGroup');
+    }
+  },
+
+  methods: {
+    handleClick() {
+      this.$parent.updateModelValue(this.value);
+    },
+  },
+
+  computed: {
+    isActive() {
+      return this.$parent.modelValue === this.value;
     },
   },
 };
